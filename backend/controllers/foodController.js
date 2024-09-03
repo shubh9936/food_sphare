@@ -3,7 +3,7 @@ import fs from 'fs'
 
 
 // add food item
-
+//this cooment is to push on github
 const addFood = async(req,res)=>{
    let image_filename = `${req.file.filename}`;
    
@@ -16,10 +16,10 @@ const addFood = async(req,res)=>{
    })
    try {
        await food.save();
-       res.json({success:true,message:"Food Added"})
+       res.json({success:true,message:"Food Adde"})
    } catch (error) {
     console.log(error)
-    res.json({success:false,message:"Error"})
+    res.json({success:false,message:"Erro"})
     
    }
 
