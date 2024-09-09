@@ -1,8 +1,68 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import './List.css'
+import axios from 'axios';
+import { toast } from 'react-toastify';
+const List = ({url}) => {
 
-const List = () => {
+   
+  const[list,setList] = useState([]);
+
+  const fetchList =async ()=>{ 
+    //api call(we use axios)
+    const responce = await axios.get(`${url}/api/food/list`);
+    if(responce.data.success){
+      //means data is loaded in response variable
+      setList(responce.data.data)
+    }
+    else{
+      toast.error("Error")
+    }
+
+  }
+ //whenver page get refresh fetchList function will exexuted
+  useEffect(()=>{
+    fetchList();
+  },[])
+
+  const removeFood=async(foodId)=>{
+    //api call(we use axios)
+    const response = await axios.post(`${url}/api/food/remove`,{id:foodId});
+    //when we call fetchList it will change the value of state list and react automatically detects state changes and re-renders components.
+    fetchList();
+    if(response.data.success){
+      toast.success(response.data.message)
+    }
+    else{
+      toast.error("Error")
+    }
+  }
   return (
-    <div>List</div>
+    <div className="list add flex-col">
+      <p>All Foods List</p>
+      <div className="list-table">
+        <div className="list-table-format title">
+          <b>Image</b>
+          <b>Name</b>
+          <b>Category</b>
+          <b>Price</b>
+          <b>Action</b>
+        </div>
+        {list.map((item,index)=>{
+          return(
+            <div key={index} className="list-table-format">
+               <img src={`${url}/images/`+item.image} alt="" />
+               <p>{item.name}</p>
+               <p>{item.category}</p>
+               <p>${item.price}</p>
+               <p onClick={()=>removeFood(item._id)}  className='cursor'>X</p>
+            </div>
+          )
+
+        })}
+      </div>
+    </div>
+
+     
   )
 }
 
