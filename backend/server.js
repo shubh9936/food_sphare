@@ -7,7 +7,7 @@ import 'dotenv/config.js'
 
 //app configS
 const app = express()
-const port = 4000
+const port = process.env.Port || 4000;
 
 //middleware
 app.use(express.json());

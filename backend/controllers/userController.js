@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 
-const loginUser=async(req,res)=>{
+const loginUser = async(req,res)=>{
     const {email,password} = req.body;
     try {
       const user = await userModel.findOne({email});
@@ -27,6 +27,7 @@ const loginUser=async(req,res)=>{
     }
 
 }
+
 
 //create token
 const createToken=(id)=>{
